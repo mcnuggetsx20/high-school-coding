@@ -9,9 +9,9 @@ def encode(source, encoder, out):
 
     for i in range(img.size[0]):
         for j in range(img.size[1]):
-            r,g,b=px[i,j]
+            r=px[i,j][0]
             r+= (1 - 2 * int(r > 0)) * int(max(px_mordka[i,j][:-1]) < 10)
-            img.putpixel((i,j), (r,g,b))
+            img.putpixel((i,j), (r) + px[i,j][1:])
 
     img.save(out)
     mordka.close()
