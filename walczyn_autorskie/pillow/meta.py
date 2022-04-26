@@ -45,8 +45,7 @@ def form(path):
             files[i][1] += '/'
     return files
 
-def scan(dir_name):
-    global pin, radius
+def scan(dir_name,pin, radius):
     files = form(dir_name)
     while True:
         i = files[0]
@@ -64,4 +63,4 @@ path = '/home/mcnuggetsx20/Documents/programming/high-school-coding/walczyn_auto
 pin = [51.110048, 17.060480]
 radius = 100
 
-scan(path)
+scan(path,pin,radius)
