@@ -1,38 +1,42 @@
-file = open('Dane_2203/brenna.txt', 'r').read().split('\n')[1:-1]
+file = open('Dane_2205/liczby.txt', 'r').read().split()
+file = [int(i) for i in file]
+file.sort()
+
+
+def fact(n):
+    ans = 1
+    for i in range(n):
+        ans *= i
+    return ans
+
+def newt(n, k):
+    res = fact(n) / ( fact(k) * fact(n-k) )
+    return res
 
 for i in range(len(file)):
-    file[i] = file[i].split()
-    file[i][2] = float(file[i][2].replace(',', '.'))
-    file[i][3] = float(file[i][3].replace(',', '.'))
+    a = file[i]
+    temp = []
+    for j in range(i+1, len(file)):
+        if not (file[j]%file[i]):
+            print(file[i], file[j])
+            temp.append(file[j])
+    c = 0
+    last =a 
+    for j in temp:
+        if j % last:
+            continue
+        c+=1
+ans5 =0
+ans3 =0
 
-mp = dict()
-ok = False
-temp = ''
 
-for j in range(len(file)):
-    i = file[j]
-    a = i[2] > 0 and i[3] > 0
-    if a and not ok:
-        ok = True
-        temp = i[0] + ' ' + i[1]
-        mp[temp] = ['', '', 0, -1]
 
-    if ok:
-        mp[temp][3]+=1
-        mp[temp][2]+=i[3] * 100
 
-    if not a and ok:
-        ok = False
-        mp[temp][0]=i[0]
-        mp[temp][1]=i[1]
-        mp[temp][2] = int(mp[temp][2]) // 100
 
-mx = 0
-curr = ''
-for i in mp:
-    if mx < mp[i][3]:
-        mx = mp[i][3]
-        curr = i
-print(curr, mp[curr][0], mp[curr][2])
+
+
+
+
+
 
 

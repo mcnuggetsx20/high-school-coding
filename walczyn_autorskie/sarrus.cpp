@@ -7,7 +7,6 @@ typedef unsigned long long ll;
 const int E = 1e5 + 7;
 const int INF = 1e9;
 
-
 void solve(){
     sll n, m, a, ans=0; cin >> n >> m;
     vector<vector<sll>>mat(n+1, vector<sll>(m+2));
