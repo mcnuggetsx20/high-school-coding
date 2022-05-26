@@ -1,4 +1,4 @@
-for i in range(10):
-    if True:
-        continue
-    print(i)
+tab = ['michal', 'tomasz']
+v = [1, 2]
+mp = dict(zip(v,tab))
+print(mp)
