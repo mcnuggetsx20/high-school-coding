@@ -12,5 +12,11 @@ for i in file:
     if a not in mp:
         mp[a] = 0
     mp[a]+=int(i['wielkosc_zamowienia'])
-print(mp)
+
+a = 0
+for i in mp:
+    a += mp[i]
+for i in mp:
+    print((mp[i]/a) * 100)
+
 
