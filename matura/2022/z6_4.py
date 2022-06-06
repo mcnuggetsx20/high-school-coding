@@ -15,21 +15,20 @@ klasa = manage(klasa)
 uczen = manage(uczen)
 ewidencja = manage(ewidencja)
 
-start = datetime.datetime.strptime('08:00', '%H:%M')
+idName = dict()
+obecni = []
 
-daty = dict()
+ctrl = '2022-04-06'
+
+for i in uczen:
+    idName[i['IdUcznia']] = i['Imie'] + ' ' + i['Nazwisko']
 
 for i in ewidencja:
-    data = datetime.datetime.strptime(i['Wejscie'][:10], '%Y-%m-%d')
-    godz = datetime.datetime.strptime(i['Wejscie'][11:], '%H:%M:%S')
-    #2022-04-04 07:02:00
-    if data not in daty:
-        daty[data] = 0
-    delta = datetime.timedelta(days = 0)
-    daty[data] += int(godz-start < delta)
+    if i['Wejscie'][:10] == ctrl:
+        obecni.append(i['IdUcznia'])
 
-for i in daty:
-    print(i, daty[i])
-
+for i in uczen:
+    if i['IdUcznia'] not in obecni:
+        print(i['Imie'], i['Nazwisko'])
 
 
