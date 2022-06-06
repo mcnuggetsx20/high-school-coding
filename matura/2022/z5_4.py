@@ -20,7 +20,7 @@ for i in file:
     if data - prev == delta:
         bottles += 12000 * int(tyg in range(1, 6))
         bottles += 5000 * int(tyg in range(6, 8))
-        print(tyg in range(1,6), ':', tyg in range(6,8))
+        #print(tyg in range(1,6), ':', tyg in range(6,8))
 
     wlk = int(i['wielkosc_zamowienia'])
     if bottles < wlk:
@@ -29,7 +29,7 @@ for i in file:
             watch =False
         zam += 1
         but += wlk
-    bottles = max(bottles - wlk, 0)
+    bottles -= wlk * int(wlk <= bottles)
     prev= data
 print(zam, but)
 
