@@ -1,0 +1,48 @@
+import user
+from random import randint
+
+cities = ['Wroclaw', 'Warszawa', 'Poznan', 'Szczecin', 'Radom', 'Czestochowa', 'Krakow', 'Gdansk', 'Kalisz', 'Karpacz']
+
+names_f = ['Zuzanna',
+        'Zofia',
+        'Hanna',
+        'Julia',
+        'Maja',
+        'Laura',
+        'Oliwia',
+        'Alicja',
+        'Lena',
+        'Pola']
+
+names_m =[ 'Antoni',
+        'Jan',
+        'Aleksander',
+        'Franciszek',
+        'Jakub',
+        'Leon',
+        'Mikołaj',
+        'Szymon',
+        'Filip',
+        'Stanisław',]
+
+lastnames_f = ['Nowak', 'Kowalska', 'Wiśniewska', 'Wójcik', 'Kowalczyk', 'Kamińska', 'Lewandowska', 'Zielińska', 'Szymańska', 'Woźniak']
+lastnames_m = ['Nowak', 'Kowalski', 'Wiśniewski', 'Wójcik', 'Kowalczyk', 'Kamiński', 'Lewandowski', 'Zieliński', 'Szymański', 'Woźniak']
+
+def gen():
+    a = randint(1,2)
+    _user = user.user()
+    if a==1:
+        _user.name= names_f[randint(0, len(names_f)-1)]
+        _user.lastname = lastnames_f[randint(0, len(lastnames_f)-1)]
+    else:
+        _user.name= names_m[randint(0, len(names_m)-1)]
+        _user.lastname = lastnames_m[randint(0, len(lastnames_m)-1)]
+    return _user
+
+for i in range(10):
+    a = gen()
+    print(a.name, a.lastname)
+        
+
+
+
