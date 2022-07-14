@@ -15,15 +15,8 @@ class Table(list):
     def find(self, key=None):
         res = []
         for i in self:
-            for j in key:
-                if j in i.__dict__.values():
-                    res.append(i)
+            if key in i.__dict__.values():
+                res.append(i)
         return res
 
-    def group(self, key=None):
-        if key==None: return
-        cont = []
-        for i in self:
-            if i.__dict__[key] not in cont: cont.append(i.__dict__[key])
-        return cont
 
