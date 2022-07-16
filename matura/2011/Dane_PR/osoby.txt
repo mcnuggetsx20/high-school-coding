@@ -1,3 +1,4 @@
+id_osoby;imie;nazwisko;telefon
 o001;Adam;Roztoka;501358358
 o002;Adam;Komarnicki;337234875
 o003;Adam;Bahdaj;985620083

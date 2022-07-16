@@ -4,7 +4,8 @@ class line:
             setattr(self, j, rows[i])
 
 class Table(list):
-    def __init__(self, file, stop=-1, sepchar = '\t'):
+    def __init__(self, file, stop=-1):
+        sepchar = ';'
         table = open(file, 'r').read().split('\n')[:stop]
         self.headers = table[0].split(sepchar)
         table = table[1:]
