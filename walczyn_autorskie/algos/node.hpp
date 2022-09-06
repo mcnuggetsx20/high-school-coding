@@ -2,7 +2,8 @@
 using namespace std;
 
 class Node {
-    int val;
-    Node *next;
+    public:
+        int val;
+        Node *next = NULL;
 };
 
