@@ -8,5 +8,4 @@ print(ans)
 
 
 
-            temp += int( abs(int(file[i+k][j])- int(file[i][j])) > 128 or abs(int(file[i][j+k]) - int(file[i][j])) > 128)
 
