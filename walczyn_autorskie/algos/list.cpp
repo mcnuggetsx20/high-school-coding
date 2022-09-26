@@ -5,7 +5,7 @@
 using namespace std;
 
 void LIST::append(int n){
-    //cout << "Called 'APPEND' with: " << n << '\n';
+    cout << "Called 'APPEND' with: " << n << '\n';
     Node *current;
     current = new Node;
     current -> val = n;
@@ -15,7 +15,7 @@ void LIST::append(int n){
     this -> tail = current;
 
     if(not (this -> size)){
-        //cout << "Size: " << this -> size << '\n';
+        cout << "Size: " << this -> size << '\n';
         this -> head = current;
     }
     ++this -> size;
