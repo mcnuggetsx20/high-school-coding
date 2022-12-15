@@ -49,7 +49,7 @@ print()
 
 
 #podpunkt 5
-from datetime import timedelta, datetime
+from datetime import datetime
 
 prev = [file[1]['Data'], file[1]['Poczatek'], file[1]['Koniec']]
 ind = 0
