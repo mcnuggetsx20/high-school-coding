@@ -53,7 +53,7 @@ for i in sorted(mp.items(), key =lambda x: x[1], reverse=True)[:3]:
 print(ans2)
 
 for i in zest:
-    print(i, '\t', zest[i])
+    print(zest[i], '\t', i)
 
 print(ans3/100)
 print(ans4)
