@@ -25,8 +25,7 @@ for i in file:
     for j in tab:
         diff = i -j
         if diff <=0 or j > i//2: break
-        if sieve[diff]:
-            mp[i] += 1
+        mp[i] += sieve[diff]
 
 mp =  sorted(mp.items(), key=lambda x:x[1])[::-1]
 print(*mp[0])
