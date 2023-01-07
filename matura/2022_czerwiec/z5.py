@@ -82,7 +82,7 @@ def f1(t):
 
 mn = 10**9
 ok = False
-o = 1.33
+o = 1.24
 for i in range(30):
     tmp = 23 - (i//2)
     vals = f1(tmp)
