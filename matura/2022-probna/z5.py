@@ -1,10 +1,13 @@
-def parse(a):
+def line(a):
     a = [ dict(zip(a[0].split('\t'), i.split('\t'))) for i in a[1:]]
     return a
 
-klienci = parse(open('dane/klienci.txt', 'r').read().split('\n')[:-1])
-pokoje = parse(open('dane/pokoje.txt', 'r').read().split('\n')[:-1])
-noclegi = parse(open('dane/noclegi.txt', 'r').read().split('\n')[:-1])
+def parse(a):
+    return line(open('dane/' + a + '.txt', 'r').read().split('\n')[:-1])
+
+klienci = parse('klienci')
+pokoje = parse('pokoje')
+noclegi = parse('noclegi')
 
 #5.1
 from collections import defaultdict as dd
@@ -55,6 +58,7 @@ for i in noclegi:
     miej = m[ind]
     stand = s[ i['nr_pokoju']]
     if stand != 'N' or miej.strip() in ['Opole', 'Katowice']: ans.add( i['nr_pokoju'])
+
 for i in pokoje:
     if i['nr_pokoju'] not in ans: print(i['nr_pokoju'])
 
