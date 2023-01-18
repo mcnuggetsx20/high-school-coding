@@ -2,8 +2,6 @@ file = open('dane/ekodom.txt', 'r').read().split('\n')
 file = [i.split() for i in file]
 file = [ dict(zip(file[0], i)) for i in file[1:]][:-1]
 
-
-
 from datetime import datetime
 
 woda = 5000
