@@ -1,13 +1,11 @@
-def line(a):
-    a = [ dict(zip(a[0].split('\t'), i.split('\t'))) for i in a[1:]]
-    return a
+def parse(name):
+    tab = open(f'dane/{name}.txt', 'r').read().split('\n')[:-1]
+    tab = [ dict(zip(tab[0].split('\t'), i.split('\t'))) for i in tab[1:]]
+    globals()[name] = tab
 
-def parse(a):
-    return line(open('dane/' + a + '.txt', 'r').read().split('\n')[:-1])
-
-klienci = parse('klienci')
-pokoje = parse('pokoje')
-noclegi = parse('noclegi')
+parse('klienci')
+parse('pokoje')
+parse('noclegi')
 
 #5.1
 from collections import defaultdict as dd
@@ -61,7 +59,6 @@ for i in noclegi:
 
 for i in pokoje:
     if i['nr_pokoju'] not in ans: print(i['nr_pokoju'])
-
 
 
 
