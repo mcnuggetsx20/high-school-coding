@@ -10,8 +10,3 @@ soup = BeautifulSoup(page, 'html.parser')
 imgs = soup.findAll("a")
 print(imgs)
 
-
-
-
-
-

@@ -31,3 +31,5 @@ print('{0:.1f}'.format(mx[0]), '{0:.1f}'.format(mx[1]))
 
 plt.plot(x[99:], y[99:], 'o')
 plt.show()
+
+
