@@ -29,4 +29,3 @@ for i in mp:
     print(a.imie, a.nazwisko)
     print(max(mp[i][1][-1] -mp[i][0][0] , mp[i][0][-1]-mp[i][1][0]))
     
-

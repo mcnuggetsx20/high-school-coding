@@ -17,4 +17,3 @@ for i in nagrody:
 print(ans, mn)
 
 
-

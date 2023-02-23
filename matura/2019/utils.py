@@ -26,4 +26,3 @@ class Table(list):
         for i in self:
             if i.__dict__[key] not in cont: cont.append(i.__dict__[key])
         return cont
-

@@ -28,4 +28,3 @@ for i in ans:
     print(i[0], '\t', i[1])
 
 
-
