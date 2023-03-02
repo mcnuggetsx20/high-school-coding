@@ -1,4 +1,4 @@
-file = open('Dane_PR2/dzialki.txt', 'r').read().split('\n\n')
+ile = open('Dane_PR2/dzialki.txt', 'r').read().split('\n\n')
 
 for i in range(len(file)):
     a = file[i].split()
@@ -9,7 +9,6 @@ for i in range(len(file)):
     for j in range(len(file)):
         if tab == file[j].split():
             print(i+1, j+1)
-
 
 
 

@@ -13,4 +13,3 @@ for i in tab:
     c += int(t/900 >= 0.7)
 print(c)
 
-

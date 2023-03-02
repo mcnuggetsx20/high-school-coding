@@ -18,4 +18,3 @@ for i in file:
 ind = max(list( mp.keys() ))
 print(ind, mp[ind])
 
-

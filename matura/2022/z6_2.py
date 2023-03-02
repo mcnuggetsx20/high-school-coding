@@ -1,7 +1,7 @@
 import datetime
-klasa = open('Dane_2205/klasa.txt', 'r').read().split('\n')[:-1]
-uczen = open('Dane_2205/uczen.txt', 'r').read().split('\n')[:-1]
-ewidencja = open('Dane_2205/ewidencja.txt', 'r').read().split('\n')[:-1]
+klasa = open('dane/klasa.txt', 'r').read().split('\n')[:-1]
+uczen = open('dane/uczen.txt', 'r').read().split('\n')[:-1]
+ewidencja = open('dane/ewidencja.txt', 'r').read().split('\n')[:-1]
 
 def manage(file):
     temp = file[0].split(';')

@@ -60,3 +60,4 @@ for i in noclegi:
 for i in pokoje:
     if i['nr_pokoju'] not in ans: print(i['nr_pokoju'])
 
+
