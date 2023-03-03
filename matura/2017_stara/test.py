@@ -5,17 +5,12 @@ def f(name):
 
 def join(main, sec, key):
     sec = {i[key]: i for i in sec}
-    res = [{**i, **sec[i[key]]} for i in main]
-    return res
+    return [ i | sec[i[key]] for i in main]
 
 f('osoby')
 f('wycieczki')
 f('rezerwacje')
 
 temp = join(rezerwacje, osoby, 'id_osoby')
-for i in temp:
-    print(i)
-
-
 
 
