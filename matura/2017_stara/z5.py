@@ -32,7 +32,6 @@ while start != end:
 
     start += timedelta(1)
 
-
 print(ans1)
 print(ans2a, ans2b)
 print(ans3)

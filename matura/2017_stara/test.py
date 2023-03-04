@@ -11,6 +11,15 @@ f('osoby')
 f('wycieczki')
 f('rezerwacje')
 
-temp = join(rezerwacje, osoby, 'id_osoby')
+#6.1
+from collections import defaultdict as dd
+ans = dd(lambda: 0)
 
+for i in join(rezerwacje, osoby, 'id_osoby'):
+    imie = i['nazwisko'] + ' ' + i['imie']
+    ans[imie] += 1
+ans = sorted(ans.items(), key=lambda x:x[0])
+for i in ans:
+    if i[1] <= 3:continue
+    print(' '.join(i[0].split()[::-1]))
 
