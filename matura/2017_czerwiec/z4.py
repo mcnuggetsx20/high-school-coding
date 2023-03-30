@@ -1,24 +1,14 @@
-<<<<<<< HEAD
 file = open('dane/punkty.txt', 'r').read().split('\n')[:-1]
 file = [i.split() for i in file]
 
-=======
-file = open('dane/punkty.txt' ,'r').read().split('\n')[:-1]
-file = [i.split() for i in file]
-
 #4.1
->>>>>>> 9552d53b548c3896679bcd5bd4371651476768f5
 N = 10**5
 sieve = [True] * (N+1)
 sieve[0] = False
 sieve[1] = False
 
-<<<<<<< HEAD
 #4.1
-for i in range(2, N+1):
-=======
 for i in range(2, N):
->>>>>>> 9552d53b548c3896679bcd5bd4371651476768f5
     for j in range(i, N//i):
         sieve[i*j] = False
 
@@ -30,11 +20,8 @@ for i in file:
 print(ans)
 
 #4.2
-<<<<<<< HEAD
 print()
 
-=======
->>>>>>> 9552d53b548c3896679bcd5bd4371651476768f5
 ans = 0
 for i in file:
     a = set(i[0])
@@ -43,7 +30,6 @@ for i in file:
 print(ans)
 
 #4.3
-<<<<<<< HEAD
 print()
 
 ans = []
@@ -80,7 +66,6 @@ for i in file:
 print(wewn, boki, zewn)
 
 
-=======
 ans = (0, ())
 for i in file:
     for j in file:
@@ -109,15 +94,3 @@ for i in file:
 
     wewn += w; boki += b; zewn += z
 print(wewn, boki, zewn)
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 9552d53b548c3896679bcd5bd4371651476768f5
