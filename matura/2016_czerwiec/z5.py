@@ -57,6 +57,7 @@ for i in ans:
 print()
 temp = join(przedmioty, zdaje, 'Id_przedmiotu')
 for i in temp: 
+    print(i)
     if 'missing' in i.keys(): print(i['Nazwa_przedmiotu'])
 
 #5.5

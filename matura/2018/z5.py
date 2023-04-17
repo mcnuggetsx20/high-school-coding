@@ -1,73 +1,85 @@
-file = open('dane/woda.txt', 'r').read().split('\n')[:-1]
-file = [i.split('\t') for i in file]
-
-#podpunkt 1
+file = open('dane/woda.txt').read().split('\n')[:-1]
+keys = ['data', 'woda']
+file = [dict(zip(keys, i.split('\t'))) for i in file]
 from collections import defaultdict as dd
-mp = dd(lambda: 0)
 
+#5.1
+ans = dd(lambda: 0)
 for i in file:
-    year = i[0].split('-')[0]
-    mp[year] += int(i[1])
-ans = sorted(mp.items(), key=lambda j:j[1])[::-1]
-print(ans[0][0])
+    rok= i['data'].split('-')[0]
+    woda = int(i['woda'])
+    ans[rok] += woda
+ans = max(ans, key=ans.get)
+print('5.1\n', ans)
 
-
-#podpunkt 2
-tab =[]
+#5.2
+from datetime import datetime
+ans = []
 temp = []
-
 for i in file:
-    c1 = int(i[1]) < 10**4
-    if c1:
-        tab.append((temp, len(temp)))
-        temp = []
-        continue
-    temp.append(i)
-ans = sorted(tab, key = lambda j:j[1])[::-1][0][0]
-print(ans[0][0], ans[-1][0])
-print()
+    woda = int(i['woda'])
+    if woda >= 10000: temp.append(i)
+    else:
+        if len(temp) > len(ans): ans= temp.copy()
+        temp=[]
+print('\n5.2\n', ans[0]['data'], ans[-1]['data'])
 
-
-#podpunkt 3
-mp = dd(lambda:0)
-
+#5.3
+ans = dd(lambda: 0)
 for i in file:
-    year = i[0].split('-')[0]
-    if year != '2008': continue
+    rok= i['data'].split('-')[0]
+    m= i['data'].split('-')[1]
+    woda = int(i['woda'])
 
-    month = i[0].split('-')[1]
-    mp[month] += int(i[1])
-for i in mp:
-    print(i, mp[i])
-print()
+    if rok != '2008': continue
+    ans[m] += woda
+a = list(ans.keys()); a.sort()
+print('\n5.3')
+for i in a: print(i, '\t', ans[i])
 
-
-#podpunkt 4
+#5.4 (o zgrozo symulacja)
+W = 5 *(10**5)
 from math import ceil
-wat = 5 * 10**5
-first = False
-b = 0
+ansa=[]
+ansb=0
+ansc=0
+WC = W
+
 for i in file:
-    pom = ceil(0.02 *wat)
-    b += wat >= 8 * 10**5
-    nad = max(0, wat-10**6)
-    wat -= nad + pom
+    data= i['data']
 
-    wat += int(i[1])
+    #po polnocy
+    pomiar = W
+    pomiarc = WC
+    nadmiar = max(0, pomiar-10**6)
+    W -= nadmiar
 
-    if nad and not first:
-        print(i[0])
-        first = True
+    if nadmiar: ansa.append(data)
+    ansb += (pomiar >= 800000)
+    ansc = max(ansc,WC)
 
-print(b)
 
-wat = 5 * 10**5
-c = 0
-for i in file:
-    pom = ceil(0.02 *wat)
-    nad = max(0, wat-10**6)
-    c = max(c, wat)
-    wat -= pom
+    #8:00
+    W -= ceil(0.02*pomiar)
+    WC -= ceil(0.02*pomiarc)
 
-    wat += int(i[1])
-print(c)
+    #koniec dnia
+    W += int(i['woda'])
+    WC += int(i['woda'])
+    #print(data, pomiar)
+
+print('\n5.4')
+print(ansa[0])
+print(ansb)
+print(ansc)
+
+
+
+
+
+
+    
+
+
+
+

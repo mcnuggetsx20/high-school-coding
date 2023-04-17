@@ -43,8 +43,3 @@ for i in przybycia:
 for i in ans: print(i)
 
 
-
-
-
-
-
