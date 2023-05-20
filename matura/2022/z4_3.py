@@ -1,4 +1,4 @@
-file = open('Dane_2205/liczby.txt', 'r').read().split()
+file = open('dane/liczby.txt', 'r').read().split()
 file = [int(i) for i in file]
 file.sort()
 

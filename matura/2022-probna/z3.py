@@ -1,50 +1,45 @@
-N = 10 ** 6
-sieve = [True] * (N+1)
+file = open('dane/liczby.txt', 'r').read().split()
+test = open('dane/liczby_przyklad.txt', 'r').read().split()
+file = list(map(int, file))
 
+from math import sqrt
+N = int(1e6)
+sieve = [True] * (N+1)
 sieve[0] = False
 sieve[1] = False
-
-for i in range(2, int(N**0.5) + 1):
-    if sieve[i] == True:
-        j = 2*i
-        while j<=N:
-            sieve[j] = False
-            j += i
-
-tab = [i for i in range(len(sieve)) if sieve[i] ]
-
-
-file = open('dane/liczby.txt', 'r').read().split()
-file = [ int(i) for i in file]
-
-#3.3
-from collections import defaultdict as dd
-mp = dd(lambda: 0)
-
+for i in range(2, int(sqrt(N))+1):
+    for j in range(2, (N//i)+1):
+        sieve[i*j] = False
+#3.1
 ans = 0
 for i in file:
-    for j in tab:
-        diff = i -j
-        if diff <=0 or j > i//2: break
-        mp[i] += sieve[diff]
+    ans += sieve[i-1]
+print(ans)
 
-mp =  sorted(mp.items(), key=lambda x:x[1])[::-1]
-print(*mp[0])
-print(*mp[-1])
+#3.2
+f = []
+for i, v in enumerate(sieve):
+    if v: f.append(i)
 
-#3.4
+from collections import defaultdict as dd
+mp = dd(lambda: 0)
+for i in set(file):
+    for j in f:
+        if j <= i//2:
+            if sieve[i-j]: 
+                mp[i] += 1
+        else: break
+mp = sorted(mp.items(), key=lambda x:x[1])
+print(mp[-1])
+print(mp[0])
+
+#3.3
 print()
-
-ans=  dd(lambda:0)
+d = [str(i) for i in range(10)] + [chr(i) for i in range(65, 71)]
+mp = dd(lambda: 0 )
 for i in file:
-    a = hex(i)[2:]
-    for j in a:
-        ans[j] +=1
+    temp = hex(i)[2:].upper()
+    for j in temp: mp[j] += 1
+for i in d: print(i, mp[i])
 
-for i in range(10):
-    j = str(i)
-    print(j, ans[j])
-
-for i in range(6):
-    print(chr(65 + i), ans[ chr(97+i) ])
 

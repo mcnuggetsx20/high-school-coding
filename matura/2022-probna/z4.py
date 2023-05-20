@@ -1,61 +1,57 @@
-file = open('dane/ekodom.txt', 'r').read().split('\n')
-file = [i.split() for i in file]
-file = [ dict(zip(file[0], i)) for i in file[1:]][:-1]
+file = open('dane/ekodom.txt', 'r').read().split('\n')[:-1]
+file = [dict(zip(file[0].split('\t'), i.split('\t'))) for i in file[1:]]
 
+from collections import defaultdict as dd
 from datetime import datetime
-
+mp = dd(lambda:0)
 woda = 5000
-lower = datetime.strptime('01.04.2022', '%d.%m.%Y')
-upper = datetime.strptime('30.09.2022', '%d.%m.%Y')
-
-bo = 0
-siec = False
-
+start = False
+c=  0
+temp1a = []
 ans1a = []
 ans1b = 0
 ans3a = 0
 ans3b = 0
-temp = []
-
-from collections import defaultdict as dd
-mp = dd(lambda: 0)
 
 for i in file:
-    woda += int(i['retencja'])
-    woda -= 190
-
     data = datetime.strptime(i['Data'], '%d.%m.%Y')
-    wd = data.weekday() + 1
-    woda -= 70* (wd==3)
+    i['retencja'] = int(i['retencja'])
 
-    mp[data.month] += int(i['retencja'])
+    woda += i['retencja']
+    woda -= 190
+    if data.weekday() == 2: woda -= (260-190)
 
-    if (data - lower).days >= 0 >= (data - upper).days:
-        if i['retencja'] == '0':
-            bo += 1
-            temp.append(i['Data'])
-        else:
-            bo = 0
-            ans1a.append( (temp, len(temp)) )
-            temp = []
+    if i['Data'] == '01.04.2022': start = True
+    if start:
+        c+= not i['retencja']
+        c *= not i['retencja']
+        if c and not (c%5): woda -= 300; ans1b +=1
+    if i['Data'] == '01.10.2022': start = False
 
-        if bo%5 == 0 and bo:
-            woda -= 300
-            ans1b += 1
-    ans3a += woda <= 0
-    ans3b -= woda * (woda < 0)
-    woda = max(0, woda)
+    if not i['retencja']:
+        temp1a.append(i['Data'])
+    else:
+        if len(temp1a) > len(ans1a): ans1a = temp1a.copy()
+        temp1a = []
 
-ans1a = sorted(ans1a, key=lambda x:x[1])[-1]
-print(ans1a[1], ans1a[0][0], ans1a[0][-1])
+    m = data.month
+    mp[m] += i['retencja']
+
+    if woda < 0: ans3a += 1; ans3b += abs(woda); woda = 0
+
+
+
+if len(temp1a) > len(ans1a): ans1a = temp1a.copy()
+temp1a = []
+
+print(len(ans1a), ans1a[0],',',  ans1a[-1])
 print(ans1b)
 print()
-for i in sorted(mp.items(), key = lambda x:x[0]):
-    print(i[0], '\t', i[1])
-print()
-print(ans3a)
-print(ans3b)
 
+for i in sorted(mp.keys()): print(i, mp[i])
+
+print()
+print(ans3a, ans3b)
 
 
 

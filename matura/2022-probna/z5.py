@@ -1,63 +1,50 @@
-def parse(name):
-    tab = open(f'dane/{name}.txt', 'r').read().split('\n')[:-1]
-    tab = [ dict(zip(tab[0].split('\t'), i.split('\t'))) for i in tab[1:]]
-    globals()[name] = tab
+from collections import defaultdict as dd
+from datetime import datetime, timedelta
+def a(name):
+    file = open(f'dane/{name}.txt', 'r').read().split('\n')[:-1]
+    file = [dict(zip(file[0].split('\t'), i.split('\t'))) for i in file[1:]]
+    globals()[name] = file
 
-parse('klienci')
-parse('pokoje')
-parse('noclegi')
+def join(t1, t2, key):
+    t2 = dd(lambda: {'missing': None}) | {i[key]: i for i in t2}
+    return [i | t2[i[key]] for i in t1]
+
+a('klienci')
+a('pokoje')
+a('noclegi')
 
 #5.1
-from collections import defaultdict as dd
-from datetime import datetime
-ans = dd(lambda:0)
-
-imiona = { i['nr_dowodu'] : i['imie'] + ' ' + i['nazwisko'] for i in klienci}
-
-for i in noclegi:
-    ind = i['nr_dowodu']
-    p = datetime.strptime(i['data_przyjazdu'], '%Y-%m-%d')
-    w = datetime.strptime(i['data_wyjazdu'], '%Y-%m-%d')
-
-    diff = abs(p-w).days
-    ans[ imiona[ind]] += diff
-
-ans = sorted(ans.items(), key=lambda x:x[1])
-print(*ans[-1])
+ans = dd(lambda: 0)
+for i in join(noclegi, klienci, 'nr_dowodu'):
+    start = datetime.strptime(i['data_przyjazdu'], '%Y-%m-%d')
+    end = datetime.strptime(i['data_wyjazdu'], '%Y-%m-%d')
+    ans[f"{i['imie']} {i['nazwisko']}"] += (end-start).days
+ans = sorted(ans.items(), key=lambda x:x[1]); print(ans[-1])
 
 #5.2
-print()
-ans = dd(lambda:0)
+ans = dd(lambda: 0)
+temp = join(noclegi, klienci, 'nr_dowodu')
+temp = join(temp, pokoje, 'nr_pokoju')
+for i in temp:
+    start = datetime.strptime(i['data_przyjazdu'], '%Y-%m-%d')
+    end = datetime.strptime(i['data_wyjazdu'], '%Y-%m-%d')
+    c = (end-start).days * int(i['cena'])
 
-cennik = { i['nr_pokoju'] : int(i['cena']) for i in pokoje }
-
-for i in noclegi:
-    ind = i['nr_dowodu']
-    p = datetime.strptime(i['data_przyjazdu'], '%Y-%m-%d')
-    w = datetime.strptime(i['data_wyjazdu'], '%Y-%m-%d')
-
-    diff = abs(p-w).days
-    cena = cennik[ i['nr_pokoju'] ] * diff
-
-    imie = imiona[ind]
-    ans[imie] += cena
+    ans[f"{i['imie']} {i['nazwisko']}"] += c
 
 for i in ans:
-    if ans[i] > 2000: print(i)
+    if ans[i] <= 2000: continue
+    print(i)
 
 #5.3
-print()
-s = { i['nr_pokoju'] : i['standard'] for i in pokoje }
-m = { i['nr_dowodu'] : i['miejscowosc'] for i in klienci }
-ans = set()
-
-for i in noclegi:
-    ind = i['nr_dowodu']
-    miej = m[ind]
-    stand = s[ i['nr_pokoju']]
-    if stand != 'N' or miej.strip() in ['Opole', 'Katowice']: ans.add( i['nr_pokoju'])
-
+temp = join(noclegi, klienci, 'nr_dowodu')
+temp = join(temp, pokoje, 'nr_pokoju')
+trash = []
+for i in temp:
+    if i['standard'] != 'N': continue
+    if i['miejscowosc'].strip() in ['Opole', 'Katowice']: trash.append(i['nr_pokoju'])
 for i in pokoje:
-    if i['nr_pokoju'] not in ans: print(i['nr_pokoju'])
+    if i['nr_pokoju'] not in trash and i['standard'] == 'N': print(i['nr_pokoju'])
+
 
 

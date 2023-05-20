@@ -1,68 +1,64 @@
-def f(name):
-    tab = open(f'dane/{name}.txt', 'r').read().split('\n')[:-1]
-    tab = [dict(zip(tab[0].split(';'), i.split(';'))) for i in tab[1:]]
-    globals()[name] = tab
+def a(name):
+    file = open(f'dane/{name}.txt').read().split('\n')[:-1]
+    file = [ dict(zip(file[0].split(';'), i.split(';'))) for i in file[1:]]
+    globals()[name] = file
 
-def join(a, b, k):
-    b = {i[k]: i for i in b}
-    return [ i | b[i[k]] for i in a]
+from collections import defaultdict as dd
+def join(t1, t2, k):
+    t2 = dd(lambda: {'missing': None}) | {i[k] : i for i in t2}
+    return [i | t2[i[k]] for i in t1]
 
-f('ewidencja')
-f('uczen')
-f('klasa')
+a('klasa')
+a('uczen')
+a('ewidencja')
 
 #6.1
 temp = join(ewidencja, uczen, 'IdUcznia')
 ans = 0
-
-for i in join(temp, klasa, 'IdKlasy'):
-    ok = i['Imie'][-1] == 'a' and i['ProfilKlasy'] == 'biologiczno-chemiczny'
-    ans += ok
-print(ans)
+for i in join(temp, klasa, 'IdKlasy'): ans += i['ProfilKlasy'] == 'biologiczno-chemiczny' and i['Imie'][-1] == 'a'
+print(ans, '\n')
 
 #6.2
-print()
-from collections import defaultdict as dd
-ans = dd(lambda: 0)
+from datetime import datetime, timedelta
+mp = dd(lambda: 0)
+tab = dd(lambda: 0)
+test = datetime.strptime('08:00:00', '%H:%M:%S')
 for i in ewidencja:
-    d = i['Wejscie'].split(' ')
-    day = d[0]
-    godz = d[1].split(':')
-    ok = int(godz[0][1]) < 8 or godz == ['08', '00', '00']
-    ans[day] += ok
-ans = sorted(ans.items(), key= lambda x:x[0])
-for i in ans: print(*i)
+    godz=  datetime.strptime(i['Wejscie'].split()[1], '%H:%M:%S')
+    data =i['Wejscie'].split()[0]
+    mp[data] += (test-godz).days < 0
+    tab[data] += 1
+    #print(data, i['IdUcznia'], (test-godz).days, godz)
+for i in mp: print(i, tab[i]-mp[i])
+print()
 
 #6.3
-print()
-ans = dd(lambda: [0,0])
-from datetime import datetime
+ans = dd(lambda: 0)
 for i in temp:
-    wej = i['Wejscie']
-    wyj = i['Wyjscie']
-    wej = datetime.strptime(wej, '%Y-%m-%d %H:%M:%S')
-    wyj = datetime.strptime(wyj, '%Y-%m-%d %H:%M:%S')
-
-    ind = i['IdUcznia']
-    name = i['Imie'] + ' ' + i['Nazwisko']
-    ans[ind][0] += abs(wej-wyj).seconds
-    ans[ind][1] = name
-
-ans = sorted(ans.items(), key= lambda x:x[1])[::-1][:3]
-for i in ans: print(i[1][1])
+    start= datetime.strptime(i['Wejscie'].split()[1], '%H:%M:%S')
+    end = datetime.strptime(i['Wyjscie'].split()[1], '%H:%M:%S')
+    ans[ f"{ i['IdUcznia'] } { i['Imie'] } { i['Nazwisko'] }" ] += (end-start).seconds
+for i in sorted(ans.items(), key=lambda x:x[1])[-3:]: print(i[0])
+print()
 
 #6.4
-print()
-ans = []
-for i in temp:
-    d = i['Wejscie'].split(' ')
-    day = d[0].split('-')[-1]
-    if day != '06': continue
-    ans.append( [i['IdUcznia'], i['Imie'] + ' ' + i['Nazwisko']] )
-
+trash = []
+for i in ewidencja:
+    if i['Wejscie'].split()[0] != '2022-04-06': continue
+    trash.append(i['IdUcznia'])
 for i in uczen:
-    a = [i['IdUcznia'], i['Imie'] + ' ' + i['Nazwisko']] 
-    if a not in ans: print(a[-1])
+    if i['IdUcznia'] not in trash: print(i['Imie'], i['Nazwisko'])
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
